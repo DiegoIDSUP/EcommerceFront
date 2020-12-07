@@ -1,0 +1,18 @@
+.card{
+    top: calc(50% - 385px);
+}
+@media(max-height:750px){
+    .card{
+        top: calc(50% - 262px);
+        left: calc(50% - 205px);
+    }
+    .formulario{
+        margin-bottom: 10px;
+        font-size: 15px;
+    }
+    .button{
+        font-size: 13px;
+        margin: 10px 0px 10px 7px;
+        padding: 10px;
+    }
+}

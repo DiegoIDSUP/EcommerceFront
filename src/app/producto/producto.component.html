@@ -1,0 +1,49 @@
+<header>
+    <title>{{ title }}</title>
+</header>
+<body style="font-family: 'Montserrat', sans-serif;">
+    
+    <img src="../../assets/productos.jpeg" class="fondo">
+    <div class="fondo" style="background-color: rgba(255, 255, 255, 0.7);filter: none; width: 90%;left: 5%;"></div>
+    <div *ngIf="report" class="fondo" style="background-color: rgba(255,255,255,0.3) !important;z-index: 1;filter: none;">
+        <div class="card" style="z-index: 2;top: calc(50% - 260px);">
+            <a (click)='report=false'><img src="../../assets/cerrar.png" class="close"></a>
+            <h2>CREAR UN REPORTE</h2>
+            <form [formGroup]="reporteForm" (ngSubmit)="Reportar(reporteForm.value)" enctype="multipart/form-data">
+                <label>Describe el problema</label>
+                <textarea formControlName="comentario" rows="5" class="formulario" style="resize: none;"></textarea>
+                <button class="btn btncssred" [disabled]="reporteForm.invalid">Reportar</button>
+            </form>
+        </div>
+    </div>
+    <div class="fondo fb" style="filter: none; width: 90%;left: 5%;position: absolute;">
+        <div style="height: 60px;margin-top: 10px;">
+            <a href="/inicio"><img src="../../assets/casa.png" class="imgicon" style="left: 20px;"></a>
+            <a href="/carrito"><img src="../../assets/carrito.png" class="imgicon" style="right: 20px;"></a>
+        </div>
+        <div class="cardProd">
+            <img src="{{producto.imagen}}" >
+            <div class="infocard">
+                <h1>{{producto.nombre}}</h1>
+                <h2 style="color: green;">${{producto.precio}}.00 MXN.</h2>
+                <div><input type="number" value="1" min="1" max="{{producto.stock}}" class="formulario" (change)="stockChosen($event)" style="width: 80px;font-size: 26px;"><button class="btn btncssblue" style="width: 60%;" (click)="addCar()">Añadir al Carrito</button></div>
+                <h2>Descripcion:</h2>
+                <label style="font-size: 20px;">{{producto.descripcion}}</label>
+                <h3 style="margin-top: 50px;">¿Algun problema con este producto?</h3>
+                <button class="btn btncssred" (click)="report=true">Reportar</button>
+            </div>
+        </div>
+        <div style="padding: 40px;width: 80%;margin-left: 10%;">
+            <h1>Comentarios</h1>
+            <div class="cardcenter" style="text-align: left;margin-bottom: 20px;" *ngFor="let comentario of comentarios">
+                <h2 *ngIf="user">{{comentario.autor}}:</h2>
+                <h2>{{comentario.comentario}}</h2>
+            </div>
+            <h2>¿Algun un comentario?</h2>
+            <form [formGroup]="comentForm" (ngSubmit)="publicarComentario(comentForm.value)">
+                <textarea class="formulario" style="resize: none;" rows="10" class="formulario" formControlName="comentario"></textarea>
+                <button class="btn btncssblue" [disabled]="comentForm.invalid" type="submit">Publicar un nuevo comentario</button>
+            </form>
+        </div>
+    </div>
+</body>

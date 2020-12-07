@@ -1,0 +1,189 @@
+.card{
+    top: calc(50% - 385px);
+}
+.dropimage{
+    border-radius: 20px;
+    background-color: cadetblue;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.content{
+    display: flex;
+    width: 100%;
+    max-height: 450px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+tr:nth-child(1){
+    background-color: rgba(0, 128, 167, 0.6) !important;
+    border-radius: 10px;
+}
+tr{
+    background-color: rgba(42, 200, 248, 0.5) !important;
+}
+th{
+    padding: 20px;
+    width: 26%;
+    border: rgba(255, 255, 255, 0.5) 2px solid;
+}
+.tinycasa{
+    position: absolute;
+    margin: 30px;
+    height: 40px;
+}
+.content .perfilcard2{
+    width: 70%;
+}
+.admin{
+    overflow: auto;
+}
+.editbtn{
+    height: 40px;
+    margin-left: calc(100% - 40px);
+}
+.perfilcard{
+    margin: 20px;
+    border-radius: 15px;
+    padding: 20px;
+    background-color: rgba(255,255,255,0.5) !important;
+}
+.table{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+.settingstab{
+    width: 48%;
+}
+.settingstab:nth-child(1){
+    margin-right: 1%;
+}
+.settingstab:nth-child(2){
+    margin-left: 1%;
+}
+.imguser{
+    margin-left: calc(50% - 100px);
+    min-height:200px;
+    min-width:200px;
+    max-height:200px;
+    max-width:200px;
+    border-radius: 200px;
+}
+.settingstable{
+    width: 98%;
+    margin: 0px 0px 0px 20px;
+}
+.perfilcard div{
+    margin: 5px 0px 0px 15px;
+}
+.perfilcard a{
+    color: black;
+}
+.settingsform{
+    margin-top: 10px;
+    width: calc(100% - 20px);
+}
+label{
+    font-size: 16px;
+}
+.Lapiz{
+    height: 40px;
+    margin-top: 25px;
+    margin-left: calc(100% - 60px);
+    cursor: pointer;
+}
+.btntiny{
+    color: white;
+    margin-left: calc(100% - 160px);
+    font-weight: bold;
+    border-radius: 20px;
+    padding: 8px;
+    width: max-content;
+}
+.settingcard{
+    width: 42%;
+    margin: 25px 10px 5px 10px;
+}
+@media(max-width:1500px){
+    .settingcard{
+        width: 70%;
+    }
+}
+
+@media(max-width:1250px){
+    .settingstable{
+        margin: 0px;
+        width: 100%;
+    }
+    .tinycasa{
+        margin: 10px;
+    }
+    .perfilcard{
+        font-size: 14px;
+        margin: 0px;
+    }
+    .content .perfilcard{
+        margin-bottom: 20px;
+    }
+    .content .perfilcard:nth-child(1){
+        margin-right: 7.5px;
+    }
+    .content .perfilcard2{
+        margin-left: 7.5px;
+    }
+    
+    .settingstab:nth-child(1){
+        margin-right: 2%;
+    }
+    .settingstab:nth-child(2){
+        margin-left: 2%;
+    }
+    .imguser{
+        margin-left: calc(50% - 80px);
+        min-height:180px;
+        min-width:180px;
+        max-height:180px;
+        max-width:180px;
+    }
+    .editbtn{
+        height: 25px;
+        margin-left: calc(100% - 25px);
+    }
+}@media(max-width:850px){
+    .perfilcard{
+        font-size: 12px;
+    }
+    .imguser{
+        margin-left: calc(50% - 60px);
+        min-height:140px;
+        min-width:140px;
+        max-height:140px;
+        max-width:140px;
+    }
+}@media(max-width:650px){
+    .card{
+        width: 305px;
+        top: calc(50% - 270px);
+        left: calc(50% - 205px);
+    }.card h2{
+        font-size: 24px;
+    }.card h3{
+        font-size: 18px;
+    }
+    .formulario{
+        margin-bottom: 10px;
+        font-size: 15px;
+    }
+    .perfilcard{
+        font-size: 10px;
+    }
+    .imguser{
+        margin-left: calc(50% - 50px);
+        min-height:120px;
+        min-width:120px;
+        max-height:120px;
+        max-width:120px;
+    }
+}

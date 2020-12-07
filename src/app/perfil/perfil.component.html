@@ -1,0 +1,202 @@
+<header>
+    <title>{{ title }}</title>
+</header>
+<body>
+    <img src="../../assets/perfil.jpg" class="fondo">
+    <a href="/inicio"><img src="../../assets/casa.png" class="tinycasa"></a>
+    
+    <div *ngIf="formprod || editv || report || domform" class="fondo" style="background-color: rgba(255,255,255,0.3) !important;z-index: 1;filter: none;">        
+        <div *ngIf="editv" class="card" style="z-index: 2;">
+            <a (click)='editv=false'><img src="../../assets/cerrar.png" class="close"></a>
+            <h2>Datos Empresariales</h2>
+            <form [formGroup]="vendedorForm" (ngSubmit)="Editardatosv(vendedorForm.value)">
+                <h3>Nombre de la empresa</h3>
+                <input type="text" class="formulario" formControlName="nombre">
+                <h3>Estado</h3>
+                <input type="text" class="formulario" formControlName="estado">
+                <h3>Ciudad</h3>
+                <input type="text" class="formulario" formControlName="ciudad">
+                <h3>RFC</h3>
+                <input type="text" class="formulario" formControlName="rfc">
+                <button class="btn btncssblue" [disabled]="vendedorForm.invalid">Editar Datos</button>
+            </form>
+        </div>
+        <div *ngIf="domform" class="card" style="z-index: 2;">
+            <a (click)='domform=false'><img src="../../assets/cerrar.png" class="close"></a>
+            <h2>Datos del Domicilio</h2>
+            <form [formGroup]="domicilioForm" (ngSubmit)="CrearDomicilio(domicilioForm.value)">
+                <label>Estado</label>
+                <input type="text" class="formulario" formControlName="estado">
+                <label>Ciudad</label>
+                <input type="text" class="formulario" formControlName="ciudad">
+                <label>Colonia</label>
+                <input type="text" class="formulario" formControlName="colonia">
+                <label>Calle</label>
+                <input type="text" class="formulario" formControlName="calle">
+                <div style="width: 100%;justify-content: center;display: flex;flex-wrap: wrap;height: 30px;">
+                    <label >Numero</label>
+                    <label style="margin-left:25%;margin-right:25%;">No. Int</label>
+                    <label >Codigo postal</label>
+                </div>
+                <div style="width: 100%;justify-content: center;display: flex;flex-wrap: wrap;height: 50px;">
+                    <input type="text" class="formulario" style="width: 10%;" formControlName="num">
+                    <input type="text" class="formulario" style="width: 10%;margin-left:25%;margin-right:25%;" formControlName="numInt">
+                    <input type="text" class="formulario" style="width: 10%;" formControlName="cp">
+                </div>
+                <label>Referencias (calles, color de casa, etc.)</label>
+                <textarea formControlName="referencia" rows="4" class="formulario" style="resize: none;"></textarea>
+                <button class="btn btncssblue" [disabled]="domicilioForm.invalid">{{msndom}}</button>
+            </form>
+        </div>
+
+        <div *ngIf="formprod" class="card" style="z-index: 2;top: calc(50% - 260px);">
+            <a (click)='formprod=false'><img src="../../assets/cerrar.png" class="close"></a>
+            <h2>{{ msnprod }}</h2>
+            <form [formGroup]="productoForm" (ngSubmit)="SubirProducto(productoForm.value,true)" enctype="multipart/form-data">
+                <label>Nombre del producto</label>
+                <input type="text" class="formulario" formControlName="nombre">
+                <div style="width: 100%;justify-content: center;display: flex;flex-wrap: wrap;height: 30px;">
+                    <label style="left: 48px;position: absolute;">Precio</label>
+                    <label style="right: 35%;position: absolute;">Stock</label>
+                </div>
+                <div style="width: 100%;justify-content: center;display: flex;flex-wrap: wrap;height: 50px;">
+                    <input type="text" class="formulario" style="width: 30%;left: 48px;position: absolute;" formControlName="precio">
+                    <input type="text" class="formulario" style="width: 30%;right: 48px;position: absolute;" formControlName="stock">
+                </div>
+                <label>Descripcion</label>
+                <textarea formControlName="descripcion" rows="4" class="formulario" style="resize: none;"></textarea>
+                <input type="file" accept=".png, .jpg, .jpeg" class="formulario" value="Gola" (change)="onChange($event,productoForm.value)">
+                <button class="btn btncssblue" [disabled]="productoForm.invalid">{{msnprod}}</button>
+            </form>
+        </div>
+        <div *ngIf="report" class="card" style="z-index: 2;top: calc(50% - 260px);">
+            <a (click)='report=false'><img src="../../assets/cerrar.png" class="close"></a>
+            <h2>Producto oculto</h2>
+            <form [formGroup]="reporteForm" (ngSubmit)="Reportar(reporteForm.value)" enctype="multipart/form-data">
+                <label>Se ha ocultado tu producto debido a reportes recientes, si crees que es un error envianos tus razones</label>
+                <textarea formControlName="comentario" rows="5" class="formulario" style="resize: none;"></textarea>
+                <button class="btn btncssred" [disabled]="reporteForm.invalid">Reportar</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class='content'>
+        <div class="perfilcard">
+            <img src="{{ user.photoURL }}" class="imguser">
+            <h2 for="">Nombre: {{ user.displayName }}</h2>
+            <h2 for="">Email: {{ user.email }}</h2>
+            <h2 *ngIf='!user.emailVerified'>Tu email no esta verificado, por favor <a href="/verify-email" (click)='ecommerceService.sendEmailVerification()'>Verificar Email</a></h2>
+        </div>
+        <div *ngIf="!admin && !vendedor" class="perfilcard perfilcard2" >
+            <form [formGroup]="vendedorForm" (ngSubmit)="solicitarvendedor(vendedorForm.value) ">
+                <label>Nombre de la empresa</label><br>
+                <input type="text" class="formulario settingsform" formControlName="nombre"><br>
+                <label>Estado</label><br>
+                <input type="text" class="formulario settingsform" formControlName="estado"><br>
+                <label>Ciudad</label><br>
+                <input type="text" class="formulario settingsform" formControlName="ciudad"><br>
+                <label>RFC (opcional)</label><br>
+                <input type="text" class="formulario settingsform" formControlName="rfc"><br>
+                <button class="btntiny btncssblue" [disabled]="vendedorForm.invalid || vendedorForm.value.verified" type="submit">Solicitar ser vendedor</button>
+            </form>
+        </div><br>
+        <div *ngIf="vendedor" class="perfilcard perfilcard2">
+            <h1>Empresa Verificada</h1>
+            <h2 for="">Nombre de la empresa: {{ datosv.nombre }}</h2>
+            <h2 for="">Estado: {{ datosv.estado }}</h2>
+            <h2 for="">Ciudad: {{ datosv.ciudad }}</h2>
+            <h2 for="">RFC: {{ datosv.rfc }}</h2>
+            <a (click)='editv=true'><img src="../../assets/lapiz.png" class="Lapiz"></a>
+        </div><br>
+        <div *ngIf="admin" class="perfilcard perfilcard2 admin">
+            <tr><th>Email</th><th>Accion</th><th>Intentos Erroneos</th><th>Fecha</th></tr>
+            <tr *ngFor="let rowlog of logs"><th>{{rowlog.email}}</th><th>{{rowlog.action}}</th><th>{{rowlog.intentos}}</th><th>{{fecha(rowlog.release_date)}}</th></tr>
+        </div><br>
+    </div>
+    <div *ngIf="!admin && !vendedor" class="tablelist settingstable">
+        <div *ngFor="let domicilio of domicilios" class="cardcenter settingcard" style="width: 40%;">
+            <h2>Locacion: {{ domicilio.ciudad }}, {{ domicilio.estado }}</h2>
+            <h2>Colonia: {{ domicilio.colonia }}</h2>
+            <h2>Calle: {{ domicilio.calle }} #{{domicilio.num}}</h2>
+            <h2>Referencia: {{ domicilio.referencia }}</h2>
+            <div style="display: flex;justify-content: center;width: 100%;">
+                <button class="btncssgreen" style="margin-right: 10px;" (click)='editarDom(domicilio)' >Editar</button>
+                <button class="btncssred" style="margin-left: 10px;" (click)='eliminarDomicilio(domicilio)'>Borrar</button>
+            </div>
+        </div>
+        <div class="cardcenter" style="margin: 25px 10px 5px 10px;max-width: 40%;">
+            <h2>Direcciones</h2>
+            <a (click)="addDomicilio()" style="cursor: pointer;"><img src="../../assets/anadir.png" ></a>
+            <h2>Ingresa una nueva direccion</h2>
+        </div>
+    </div>
+    <div *ngIf="admin || vendedor" class="table">
+        <div *ngIf="admin && !fills" class="tablelist settingstab">
+            <div class="cardcenter" style="margin: 25px 10px 5px 10px;">
+                <h2>No hay solicitudes de vendedores</h2>
+                <img src="../../assets/404.png" alt="" height="40px">
+                <h2>En cuanto alguien quiera ser vendedor lo podras vizualizarlo en este apartado</h2>
+            </div>
+        </div>
+        <div *ngIf="admin && fills" class="tablelist settingstab">
+            <div *ngFor="let solicitud of solitudes" class="cardcenter settingcard">
+                <h2>Empresa: {{ solicitud.nombre }}</h2>
+                <h2>Locacion: {{ solicitud.ciudad }}, {{ solicitud.estado }}</h2>
+                <h2>Email del usuario: {{ solicitud.email }}</h2>
+                <h2>RFC: {{ solicitud.rfc }}</h2>
+                <div style="display: flex;justify-content: center;width: 100%;">
+                    <button class="btncssgreen" style="margin-right: 10px;" (click)='AutorizarVendedor(solicitud)' >Aceptar</button>
+                    <button class="btncssred" style="margin-left: 10px;" (click)='EliminarSolicitud(solicitud)'>Denegar</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="admin && !fillr" class="tablelist settingstab">
+            <div class="cardcenter" style="margin: 25px 10px 5px 10px;">
+                <h2>No hay reportes sobre productos</h2>
+                <img src="../../assets/404.png" alt="" height="40px">
+                <h2>En cuanto alguien reporte un producto lo podras vizualizarlo en este apartado</h2>
+            </div>
+        </div>
+        <div *ngIf="admin && fillr" class="tablelist settingstab">
+            <div *ngFor="let reporte of reportes" class="cardcenter settingcard">
+                <h2>Usuario: {{ reporte.email }}</h2>
+                <a [routerLink]="['/producto',reporte.producto]"><h2>Producto: {{ reporte.nombre }}</h2></a><br>
+                <h3>Razon: {{reporte.comentario}}</h3>
+                <div style="display: flex;justify-content: center;width: 100%;">
+                    <button *ngIf="reporte.showp" class="btncssgreen" style="margin-right: 10px;" (click)='penalizaruser(reporte)' >Penalizar</button>
+                    <button *ngIf="!reporte.showp" class="btncssgreen" style="margin-right: 10px;" (click)='despenalizar(reporte)' >Despenalizar</button>
+                    <button class="btncssred" style="margin-left: 10px;" (click)='Retirareporte(reporte)'>Denegar</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="vendedor && !fillp" class="tablelist settingstab">
+            <div class="cardcenter" style="margin: 25px 10px 5px 10px;">
+                <h2>No has agregado productos</h2>
+                <a (click)='Addprod()' style="cursor: pointer;"><img src="../../assets/anadir.png" height="40px"></a>
+                <h2>Crea productos para que se puedan vizualizar en la pagina de inicio</h2>
+            </div>
+        </div>
+        <div *ngIf="vendedor && fillp" class="tablelist settingstab">
+            <div *ngFor="let producto of productos" class="cardcenter"  style="margin: 25px 10px 5px 10px;">
+                <a *ngIf="producto.show" (click)="deleteProd(producto)" style="cursor: pointer;margin-left: calc(100% - 20px);top: -10px;"><img src="../../assets/eliminar.png" style="height: 30px;width: auto;"></a>
+                <img src="{{ producto.imagen }}" alt=""><br>
+                <a (click)='EditProd(producto)' style="cursor: pointer;">{{ producto.nombre }}</a><br>
+                <label class="stock">Stock: {{ producto.stock }}</label><label class="precio">Precio: ${{ producto.precio }} MXN</label><br><br>
+                <a *ngIf="!producto.show" (click)="openReport(producto.id)" style="cursor: pointer;margin-left: 80%;"><img src="../../assets/advertencia.png" style="height: 30px;width: auto;"></a>
+            </div>
+            <div class="cardcenter" style="margin: 25px 10px 5px 10px;max-width: 40%;">
+                <h2 style="font-size: 20px;">Agrega nuevos productos</h2>
+                <a (click)='Addprod()' style="cursor: pointer;"><img src="../../assets/anadir.png" ></a>
+            </div>
+        </div>
+
+        <div *ngIf="vendedor && !fillped" class="tablelist settingstab">
+            <div class="cardcenter" style="margin: 25px 10px 5px 10px;">
+                <h2>Todavia no hay pedidos</h2>
+                <img src="../../assets/404.png" alt="" height="40px">
+                <h2>Encuanto hagan un pedido a tus productos se visualizará aqui</h2>
+            </div>
+        </div>
+        <div *ngIf="vendedor && fillped" class="tablelist settingstab"></div>
+    </div>
+</body>

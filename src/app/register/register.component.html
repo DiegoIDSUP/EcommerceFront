@@ -1,0 +1,22 @@
+<header>
+    <title>{{ title }}</title>
+</header>
+<body> 
+  <img src="../../assets/registro.jpg" class="fondo" alt="">
+  <a href="/inicio"><img src="../../assets/casa.png" class="casa"></a>
+  <div class="card">
+    <h1>Registrarse</h1><br>
+    <form [formGroup]="registroForm" (ngSubmit)="registrarse(registroForm.value)">
+      <th>Nombre completo</th><br>
+      <input type="text" class="formulario" formControlName="Nombre" autocomplete="name" placeholder="Nombre Completo"><br>
+      <th>Correo Electronico</th><br>
+      <input type="email" class="formulario" formControlName="Correo" autocomplete="email" placeholder="Correo Electronico"><br>
+      <th>Contraseña</th><br>
+      <input type="password" class="formulario" formControlName="Password" autocomplete="current-password" placeholder="Debe contener al menos 8 carateres"><br>
+      <th>Connfirmar Contraseña</th><br>
+      <input type="password" class="formulario" formControlName="Passwordvalid" autocomplete="current-password" placeholder="Confirmar contraseña"><br>
+      <button class="btn btncssblue" [disabled]="registroForm.invalid" type="submit">Registrarse</button>
+    </form><br>
+    <label>¿Ya estas registrado? <a href="/login">Iniciar Sesion</a></label>
+  </div>
+</body>

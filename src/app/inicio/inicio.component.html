@@ -1,0 +1,34 @@
+<header>
+    <title>{{ title }}</title>
+</header>
+<body>
+    <img src="../../assets/inicio.jpg" class="fondo">
+    <img src="../../assets/Logo Chiapas.png" class="Logo">
+    <a href="/carrito"><img src="../../assets/carrito.png" href="" class="carrito"></a>
+    <div *ngIf="!isLoggedin">
+        <div class="head">
+            <a href="/registro">Registrarse</a><a href="/login">Iniciar Sesion</a>
+        </div>
+    </div>
+    <div *ngIf="isLoggedin">
+        <div class="head userlog"> 
+            <img src="{{user.photoURL}}" alt="">
+            <a href="/perfil">{{ user.displayName }}</a><br>
+            <a href="" (click)="ecommerceService.logout()">Cerrar Sesion</a>
+        </div>
+    </div>
+    <div *ngIf="!fill" class="tablelist settingstable">
+        <div class="cardcenter settingscard">
+            <h2>Todavia no tenemos productos</h2>
+            <img src="../../assets/buscando.png" alt="" height="40px">
+            <h2>En cuanto los vendedores suban algun producto lo podras vizualizarlo en este apartado, disculpe las molestias</h2>
+        </div>
+    </div>
+    <div *ngIf="fill" class="tablelist settingstable">
+        <div class="cardcenter settingscard" *ngFor="let producto of productos">
+            <div style="height: 200px;width: auto;"><img src="{{ producto.imagen }}"><br></div>
+            <a [routerLink]="['/producto',producto.id]">{{ producto.nombre }}</a><br>
+            <label class="stock">Stock: {{ producto.stock }}</label><label class="precio">Precio: ${{ producto.precio }} MXN</label>
+        </div>
+    </div>
+</body>

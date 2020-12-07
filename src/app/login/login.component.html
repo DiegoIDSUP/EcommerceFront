@@ -1,0 +1,23 @@
+<header>
+    <title>{{ title }}</title>
+</header>
+<body> 
+  <img src="../../assets/login.jpg" class="fondo" alt="">
+  <a href="/inicio"><img src="../../assets/casa.png" class="casa"></a>
+  <div class="card">
+    <form [formGroup]="loginForm" (ngSubmit)="Login(loginForm.value)">
+      <h1>Inicio de Sesion</h1><br>
+      <th for="email">Correo Electronico</th><br>
+      <input type="email" class="formulario" formControlName="email" autocomplete="email"><br>
+      <th for="password">Contraseña</th><br>
+      <input type="password" class="formulario" formControlName="password" autocomplete="current-password"><br>
+      <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
+      <button class="btn btncssblue" [disabled]="loginForm.invalid" type="submit">Iniciar Sesion</button>
+    </form>
+    <label>¿No tienes cuenta? <a href="/registro">Registrarse</a></label><br>
+    <div class="socialdiv">
+      <button class='btn btnsocial gmail' (click)="signInWithGoogle()"><img src="../../assets/gmail.png" alt="" height="40px">Iniciar con Gmail</button>
+      <button class='btn btnsocial facebook' (click)="signInWithFacebook()"><img src="../../assets/facebook.png" alt="" height="40px">Inciar con Facebook</button>
+    </div>
+  </div>
+</body>

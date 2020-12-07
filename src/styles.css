@@ -1,1 +1,186 @@
 /* You can add global styles to this file, and also import other style files */
+a{
+    color: white;
+    text-decoration: none;
+}
+.casa{
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    height: 100px;
+}
+.fondo{
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    filter: blur(6px);
+}
+.card{
+    background-color: rgba(0,0,0,0.8) !important;
+    color: white;
+    left: calc(50% - 280px);
+    font-size: 25px;
+    width: 450px;
+    position: absolute;
+    border-radius: 15px;
+    padding: 0px 60px 20px 50px;
+}
+.tablelist{
+    width: 96%;
+    padding: 0px 0px 25px 0px;
+    margin-bottom: 50px;
+    border-radius: 20px;
+    background-color: rgba(255,255,255,0.5) !important;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+.stock{
+    margin-right: 28%;
+}
+.close{
+    position: absolute;
+    height: 40px;
+    top: 20px;
+    right: 25px;
+    cursor: pointer;
+}
+.cardcenter{
+    padding: 20px;
+	text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border-radius: 5px;
+    border: 1px solid black;
+    background-color: rgba(255,255,255,0.65) !important;
+}
+.cardcenter img{
+    height: 200px;
+}
+.cardcenter a{
+    color: black;
+    top: 10px;
+    position: relative;
+}
+.cardcenter label{
+    top: 15px;
+    position: relative;
+}
+.formulario{
+    padding: 5px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    width: 100%;
+}
+.btn{
+    border-radius: 0.6em;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    width: 100%;
+    color: white;
+    width: 100%;
+    margin: 10px 0px 10px 7px;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+}
+.btnsocial{
+    padding: 5px 0px 5px 0px;
+}
+.btnsocial img{
+    margin-right: 10px;
+}
+.gmail{
+    background-color: #db4a39;
+}
+.facebook{
+    background-color: #3b5998;
+}
+.btncssblue {
+    box-sizing: border-box;
+    background-color: transparent;
+    padding: 1.2em;
+    border-color: #3498db;
+    box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+    transition: all 350ms ease-in-out;
+}
+.btncssblue:hover, .button:focus {
+    box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
+    color: #fff;
+    outline: 0;
+}
+.btncssgreen {
+    color: white;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-sizing: border-box;
+    background-color: transparent;
+    padding: 1.2em;
+    border-color: #32910d;
+    box-shadow: 0 0 40px 40px #32910d inset, 0 0 0 0 #32910d;
+    transition: all 350ms ease-in-out;
+}
+.btncssgreen:hover, .button:focus {
+    box-shadow: 0 0 10px 0 #32910d inset, 0 0 10px 4px #32910d;
+    color: #fff;
+    color: black;
+    outline: 0;
+}
+.btncssred {
+    color: white;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-sizing: border-box;
+    background-color: transparent;
+    padding: 1.2em;
+    border-color: #c40303;
+    box-shadow: 0 0 40px 40px #c40303 inset, 0 0 0 0 #c40303;
+    transition: all 350ms ease-in-out;
+}
+.btncssred:hover, .button:focus {
+    box-shadow: 0 0 10px 0 #c40303 inset, 0 0 10px 4px #c40303;
+    color: #fff;
+    color: black;
+    outline: 0;
+}
+
+@media(max-width:1000px){
+    .cardcenter img{
+        height: 150px;
+    }
+}
+
+@media(max-width:800px){
+    .cardcenter img{
+        width: 90%;
+    }
+    .cardcenter{
+        width: 50%;
+    }
+    .stock{
+        margin-right: 10%;
+    }
+}
+@media(max-height:750px){
+    .card{
+        font-size: 15px;
+        width: 300px;
+        top: calc(50% - 200px);
+        left: calc(50% - 175px);
+    }
+}

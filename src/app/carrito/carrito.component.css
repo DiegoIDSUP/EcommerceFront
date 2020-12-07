@@ -1,0 +1,16 @@
+
+.total{
+    margin-top: 40px;
+    width: 96%;
+    align-items: center;
+    justify-content: flex-end;
+    display: flex;
+}
+@media(max-width:750px){
+    h1{
+        font-size: 20px;
+    }
+    h2{
+        font-size: 16px;
+    }
+}

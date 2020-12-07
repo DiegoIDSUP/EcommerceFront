@@ -1,0 +1,34 @@
+<header>
+    <title>{{title}}</title>
+</header>
+<body>
+    <img src="../../assets/carrito.jpg" class="fondo" alt="">
+    <div class="fondo" style="background-color: rgba(255, 255, 255, 0.7);filter: none; width: 70%;left: 15%;"></div>
+    <div class="fondo fb" style="filter: none; width: 70%;left: 15%;position: absolute;">
+        <div style="height: 60px;margin-top: 10px;">
+            <a href="/inicio"><img src="../../assets/casa.png" style="margin-left: 25px; width:80px;"></a>
+            <div *ngIf="!fillcar" style="padding-top: 15%;width: 100%;text-align: center;">
+                <h1>No has agregado productos por el momento</h1>
+            </div>
+            <div *ngFor="let producto of carrito" style="display: flex;">
+                <div style="width: 35%;height: 300px;margin: 30px;align-items: center;display: flex;justify-content: center;">
+                    <img src="{{producto.producto.imagen}}" style="width: auto;height: auto;max-width: 100%;max-height: 100%;">
+                </div>
+                <div style="width: 35%;">
+                    <h1>{{producto.producto.nombre}}</h1>
+                    <h2 style="color: green;">Precio unitario: ${{producto.producto.precio}}.00 </h2><h2 style="color: rgb(45, 101, 204);">Importe Final: ${{(producto.producto.precio*producto.stock)}}.00</h2>
+                    <h2>Cantidad: <input type="number" value="{{producto.stock}}" min="0" max="{{producto.producto.stock}}" (change)="cambiarStock($event,producto)" class="formulario" style="width: 80px;font-size: 26px;"></h2>
+                </div>
+                <div style="margin-left: 7%;width: 7%;align-items: center;display: flex;">
+                    <a style="cursor: pointer;" (click)="eliminarProdcuto(producto)"><img src="../../assets/eliminar.png" style="width: 100%;height: auto;"></a>
+                </div>
+            </div>
+            <div *ngIf="fillcar" class="total">
+                <h1>Total a pagar: ${{total}}.00</h1>
+                <button class="btncssgreen" (click)="router.navigate(['/pagar'])" style="margin-left: 50px;">Pagar</button>
+            </div>
+        </div>
+    </div>
+    
+
+</body>

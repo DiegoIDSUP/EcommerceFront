@@ -1,0 +1,101 @@
+<header>
+    <title>{{title}}</title>
+</header>
+
+<body>
+    <img src="../../assets/pagar.jpg" class="fondo">
+    <div *ngIf="domform" class="fondo"
+        style="background-color: rgba(255,255,255,0.3) !important;z-index: 1;filter: none;">
+        <div *ngIf="domform" class="card" style="z-index: 2;">
+            <a (click)='domform=false'><img src="../../assets/cerrar.png" class="close"></a>
+            <h2>Datos del Domicilio</h2>
+            <form [formGroup]="domicilioForm" (ngSubmit)="CrearDomicilio(domicilioForm.value)">
+                <label>Estado</label>
+                <input type="text" class="formulario" formControlName="estado">
+                <label>Ciudad</label>
+                <input type="text" class="formulario" formControlName="ciudad">
+                <label>Colonia</label>
+                <input type="text" class="formulario" formControlName="colonia">
+                <label>Calle</label>
+                <input type="text" class="formulario" formControlName="calle">
+                <div style="width: 100%;justify-content: space-around;display: flex;flex-wrap: wrap;height: 30px;">
+                    <label>Numero</label>
+                    <label>No. Int</label>
+                    <label>Codigo postal</label>
+                </div>
+                <div style="width: 100%;justify-content: space-around;display: flex;flex-wrap: wrap;height: 50px;">
+                    <input type="text" class="formulario" style="width: 10%;" formControlName="num">
+                    <input type="text" class="formulario" style="width: 10%;" formControlName="numInt">
+                    <input type="text" class="formulario" style="width: 10%;" formControlName="cp">
+                </div>
+                <label>Referencias (calles, color de casa, etc.)</label>
+                <textarea formControlName="referencia" rows="4" class="formulario" style="resize: none;"></textarea>
+                <button class="btn btncssblue" [disabled]="domicilioForm.invalid">{{msndom}}</button>
+            </form>
+        </div>
+    </div>
+    <div class="fondo" style="background-color: rgba(255, 255, 255, 0.7);filter: none; width: 90%;left: 5%;"></div>
+    <div  class="fondo" style="filter: none; width: 90%;left: 5%;position: absolute;">
+        <div class="tabledom">
+            <div *ngFor="let domicilio of domicilios" class="carddom" style="cursor: pointer;" (click)="choseDom(domicilio)">
+                <h3>Locacion: {{ domicilio.ciudad }}, {{ domicilio.estado }}</h3>
+                <h3>Colonia: {{ domicilio.colonia }}</h3>
+                <h3>Calle: {{ domicilio.calle }} #{{domicilio.num}}</h3>
+                <h3>Referencia: {{ domicilio.referencia }}</h3>
+                <div style="display: flex;justify-content: space-around;width: 100%;">
+                    <button class="btncssgreen" (click)='editarDom(domicilio)'>Editar</button>
+                    <button class="btncssred" (click)='eliminarDomicilio(domicilio)'>Borrar</button>
+                </div>
+            </div>
+            <div class="carddom" style="justify-content: center;flex-wrap: wrap;align-items: center;display: flex;">
+                <h3>Direcciones</h3>
+                <a (click)="addDomicilio()" style="width: 100%;height: 50%;display: flex;justify-content: center;cursor: pointer;"><img  style="width: auto;height: 100%;" src="../../assets/anadir.png"></a>
+                <h3>Ingresa una nueva direccion</h3>
+            </div>
+        </div>
+        
+        
+        <div class="tabledom" style="padding-bottom: 40px;justify-content: space-around;">
+            <div style="width: 40%;text-align: center;">
+                <h1 *ngIf="!domselect">No has seleccionado un domicilio</h1>
+                <div *ngIf="domselect">
+                    <fieldset style="margin-top: 20px;border-radius: 10px;padding-bottom: 20px;">
+                        <legend style="font-size: 30px;">Direccion seleccionada</legend>
+                        <h3>Locacion: {{ dom.ciudad }}, {{ dom.estado }}</h3>
+                        <h3>Colonia: {{ dom.colonia }}</h3>
+                        <h3>Calle: {{ dom.calle }} #{{dom.num}}</h3>
+                        <h3>Referencia: {{ dom.referencia }}</h3>
+                    </fieldset>
+                </div>
+                <fieldset style="margin-top: 20px;border-radius: 10px;padding-bottom: 20px;">
+                    <legend style="font-size: 30px;">Monto a pagar</legend>
+                    <h1 style="color: green;">${{total}}.00 MXN</h1>
+                </fieldset>
+            </div>
+            <form [formGroup]="cardForm" style="width: 40%;margin-top: 30px;" (ngSubmit)="generateCharge(cardForm.value)" > 
+                <fieldset style="margin-top: 20px;border-radius: 10px;padding-bottom: 20px;">
+                  <legend style="font-size: 30px;">Datos de la tarjeta</legend>
+                  <h3>Nombre del Titular</h3>
+                  <input type="text" class="formulario" style="width: 90%;" autocomplete="name" formControlName="name">
+                  <h3>N&uacute;mero de Tarjeta</h3>
+                  <input type="number" class="formulario" style="width: 90%;" (change)="defineCard($event)" formControlName="card" min="1">
+                  <div style="display: flex;justify-content: space-around;">  
+                    <h3>CVV2</h3><h3>Fecha de expiraci&oacute;n (MM/YY)</h3>
+                  </div>
+                  <div style="display: flex;justify-content: space-around;">  
+                    <input type="number" class="formulario" style="width: 80px;" formControlName="cvv2">
+                    <div>
+                        <input type="number" class="formulario" style="width: 50px;" formControlName="month" min="1" max="12" (change)="verMes($event)"> <label style="font-size: 35px;padding: 10px;">/</label>
+                        <input type="number" class="formulario" style="width: 50px;" formControlName="year" min="1">
+                    </div>
+                  </div>
+                  <div style="display: flex;justify-content: space-between;">  
+                    <h2>{{cardtype}}</h2>
+                    <button class="btncssgreen" [disabled]="cardForm.invalid" type="submit">Pagar</button>
+                  </div>
+                </fieldset>
+                
+            </form>
+        </div>
+    </div>
+</body>
