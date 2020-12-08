@@ -97,9 +97,7 @@ export class PagarComponent implements OnInit {
           "email" : "153241@ids.upchiapas.edu.mx"
         }
       };
-      
-      
-      this.openpayService.CreateCharge(createToken,newCharge)
+      this.openpayService.CreateCharge(createToken,newCharge,this.dom)
     }else{
       alert("Selecciona una direccion")
     }

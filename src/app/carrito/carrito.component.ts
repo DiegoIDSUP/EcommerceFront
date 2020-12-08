@@ -18,6 +18,7 @@ export class CarritoComponent implements OnInit {
       this.carrito=JSON.parse(cookies.get("Carrito"))
       this.hacerCuenta()
     }
+    console.log(this.carrito)
    }
 
   ngOnInit(): void {

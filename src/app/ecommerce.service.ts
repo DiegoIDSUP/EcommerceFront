@@ -20,7 +20,7 @@ export class EcommerceService {
   constructor(public _http: HttpClient,public  firebaseAuth :  AngularFireAuth, public  router:  Router, private cookies: CookieService) {}
 
   async singInWithEmail(user){
-    this.getsearch("sessionslogs3","?email="+user.email).subscribe(response =>{
+    this.getsearch("sessionslogs_any","?email="+user.email).subscribe(response =>{
       let data = response.pop()
       console.log(data)
       if(response.length<1){
@@ -72,7 +72,7 @@ export class EcommerceService {
   }
   async signInWithSocial(provider,prov){
     await this.firebaseAuth.signInWithPopup(provider).then(result => {
-      this.Log(this.getaccessToken(result.credential),prov,"2/")
+      this.Log(this.getaccessToken(result.credential),prov,"_social/")
       this.Sessionlog({'email' : result.user.email,'action' : "Inicio de sesion con redes sociales ("+result.credential.signInMethod+")",'intentos' : 0, 'release_date' : new Date()}).subscribe(response => {})
     }).catch(error => { alert(this.Errors(error)) });
     this.getauth("usuarios").subscribe(response => { })
@@ -83,7 +83,7 @@ export class EcommerceService {
     await this.firebaseAuth.createUserWithEmailAndPassword(email, password).then(result => {
       firebase.auth().currentUser.updateProfile({displayName: name ,photoURL: '../assets/usuario.png'})
       this.register({ 'email' : email, 'password1' : firebase.auth().currentUser.email, 'password2' : firebase.auth().currentUser.email }).subscribe(response => {
-        this.Sessionlog({'email' : email,'action' : "Creacion de usuario",'intentos' : 0, 'release_date' : new Date()}).subscribe(response => {this.SingIn({  'email' : email, 'password' : firebase.auth().currentUser.email },0)})
+        this.Sessionlog({'email' : email,'action' : "Creacion de usuario",'intentos' : 0, 'release_date' : new Date()}).subscribe(response => {this.SingIn({  'email' : email, 'password' : password },0)})
       })
     })
   }
@@ -184,16 +184,18 @@ export class EcommerceService {
   
   deleteauth(peticion,id,): Observable<any>{
     let headers = new HttpHeaders().set('Content-Type','application/json');
+    console.log(headers)
 		return this._http.delete(this.url+peticion+"/"+id+"/", {headers: headers});
   }
   delete(peticion,id,): Observable<any>{
     let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization',this.cookies.get("Provider") + this.cookies.get("Token"));
+    console.log(headers)
 		return this._http.delete(this.url+peticion+this.cookies.get("Slash")+id+"/", {headers: headers});
   }
   
   Sessionlog(sessionlog): Observable<any>{
 		let headers = new HttpHeaders().set('Content-Type','application/json');
-		return this._http.post(this.url+'sessionslogs3/' , sessionlog, {headers: headers});
+		return this._http.post(this.url+'sessionslogs_any/' , sessionlog, {headers: headers});
 	}
 
   login(user): Observable<any>{
@@ -205,7 +207,11 @@ export class EcommerceService {
 		return this._http.post(this.url+'registration/' , user, {headers: headers});
   }
   postcharges(datos): Observable<any>{
-    let headers = new HttpHeaders().set('Content-Type','application/json')
+    let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Basic '+btoa(environment.OpenPay.private_key+':'));
 		return this._http.post(environment.OpenPay.url+environment.OpenPay.merchant_id+"/charges", datos, {headers: headers});
+  }
+  postrefund(TRANSACTION_ID,datos): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Basic '+btoa(environment.OpenPay.private_key+':'));
+		return this._http.post(environment.OpenPay.url+environment.OpenPay.merchant_id+"/charges/"+TRANSACTION_ID+"/refund",datos, {headers: headers});
   }
 }

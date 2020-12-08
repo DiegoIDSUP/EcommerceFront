@@ -15,6 +15,7 @@ export class PerfilComponent implements OnInit {
   user
   datosv
   productos
+  pedidos
   solitudes
   reportes
   domicilios
@@ -126,6 +127,23 @@ export class PerfilComponent implements OnInit {
               this.fillp=true
             }
           })
+          this.ecommerceService.getauthsearch("pedidos","?user="+this.userbd.id).subscribe(response => {
+            if(response.length>0){
+              this.pedidos= response
+              this.fillped=true
+              if(this.fillped){
+                console.log(this.pedidos)
+                for(let i=0; i<this.pedidos.length;i++){
+                  for(let producto of this.productos){
+                    if(producto.id==this.pedidos[i].producto){
+                      this.pedidos[i]={...this.pedidos[i],'img' : producto.imagen,'name':producto.nombre}
+                      break
+                    }
+                  }
+                }
+              }
+            }  
+          })
         }
       })
     })
@@ -151,7 +169,7 @@ export class PerfilComponent implements OnInit {
     let sure=confirm("Seguro que deseas eliminar la solicutud del vendedor "+value.nombre+" con email: "+value.email)
     if(sure){
       delete value['email']
-      this.ecommerceService.deleteauth("vendedores",value.id).subscribe(response => { window.location.reload() })
+      this.ecommerceService.delete("vendedores",value.id).subscribe(response => { window.location.reload() })
     }
   }
   solicitarvendedor(value){
@@ -196,14 +214,16 @@ export class PerfilComponent implements OnInit {
     formData.append('stock',value.stock);
     formData.append('precio',value.precio);
     formData.append('show',value.show);
-    if(image)
+    if(image){
       console.log(this.filesToUpload.name)
       var name= new Date().getTime().toString()+"_"+value.user+this.filesToUpload.name.substring(this.filesToUpload.name.length-4,this.filesToUpload.name.length)
       formData.append('imagen',this.filesToUpload, name);
+    }
     return formData
   }
 
   SubirProducto(value){
+    console.log(value)
     if(this.editprod){
       if(value.imagen=="fill"){
         this.ecommerceService.update("productos",value.id,this.getFormData(value,true)).subscribe(response => {window.location.reload()})
@@ -254,7 +274,7 @@ export class PerfilComponent implements OnInit {
     let sure=confirm("Seguro que deseas eliminar el reporte del producto "+value.nombre+" echo por: "+value.email)
     if(sure){
       delete value['email']
-      this.ecommerceService.deleteauth("reportes",value.id).subscribe(response => { window.location.reload() })
+      this.ecommerceService.delete("reportes",value.id).subscribe(response => { window.location.reload() })
     }
   }
   penalizaruser(value){
@@ -273,12 +293,14 @@ export class PerfilComponent implements OnInit {
   }
   borrarEquals(value){
     this.ecommerceService.getauthsearch("reportes","?producto="+value.producto).subscribe(response => { 
+      console.log(response.length)
+      console.log(response)
       if(response.length>1){
         for(let res of response){
-          this.ecommerceService.deleteauth("reportes",res.id).subscribe(response => {})
+          this.ecommerceService.delete("reportes",res.id).subscribe(response => {})
         }
       }else{
-        this.ecommerceService.deleteauth("reportes",value.id).subscribe(response => {})
+        this.ecommerceService.delete("reportes",value.id).subscribe(response => {})
       }
      })
   }

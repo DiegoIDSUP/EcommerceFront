@@ -14,7 +14,7 @@ export const environment = {
     appId: "1:20702031947:web:125bc26378e8bb22269dce",
     measurementId: "G-KHYHXRQRZW"
   },
-  djangourl : "http://127.0.0.1:8000/app/",
+  djangourl : "https://ecommerceback-dfg.herokuapp.com/app/",
   OpenPay :{
     private_key: "sk_c32d4da0ab4b4ef0a2fa777a4b125f8e",
     public_key: "pk_fce4be578c3047618a6a92e47f2df328",

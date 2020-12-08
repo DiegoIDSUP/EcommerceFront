@@ -197,6 +197,13 @@
                 <h2>Encuanto hagan un pedido a tus productos se visualizará aqui</h2>
             </div>
         </div>
-        <div *ngIf="vendedor && fillped" class="tablelist settingstab"></div>
+        <div *ngIf="vendedor && fillped" class="tablelist settingstab">
+            <div *ngFor="let pedido of pedidos" class="cardcenter"  style="margin: 25px 10px 5px 10px;">
+                <img src="{{ pedido.img }}" alt=""><br>
+                <label>{{ pedido.name }}</label><br>
+                <label>Stock pedidos: {{ pedido.stock }}</label><br>
+                <label >ID_TRANSACTION: {{pedido.id_transaction}}</label>
+            </div>
+        </div>
     </div>
 </body>

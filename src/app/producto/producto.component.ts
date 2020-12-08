@@ -25,7 +25,7 @@ export class ProductoComponent implements OnInit {
     ecommerceService.getsearch("productos",id+"/").subscribe(response => {
       this.producto=response
       this.title=response.nombre
-      ecommerceService.getsearch('comentarios3',"?producto="+response.id).subscribe(response => {
+      ecommerceService.getsearch('comentarios_any',"?producto="+response.id).subscribe(response => {
         if(response.length>0){
           this.comentarios=response
         }
@@ -89,21 +89,25 @@ export class ProductoComponent implements OnInit {
   
   addCar(){
     if(this.cookies.get("Token").length>0){
-      let car = []
-      if(this.cookies.get("Carrito").length>0){
-        car = JSON.parse(this.cookies.get("Carrito"))
-      }
-      console.log(car)
-      for(let product of car){  
-        if(product.producto.id==this.producto.id){
-          this.stock=this.stock + product.stock
-          car.splice(car.indexOf(product),1)
+      if(this.producto.stock>0){
+        let car = []
+        if(this.cookies.get("Carrito").length>0){
+          car = JSON.parse(this.cookies.get("Carrito"))
         }
+        console.log(car)
+        for(let product of car){  
+          if(product.producto.id==this.producto.id){
+            this.stock=this.stock + product.stock
+            car.splice(car.indexOf(product),1)
+          }
+        }
+        car.push({"producto" : this.producto,"stock":this.stock})
+        this.cookies.set("Carrito",JSON.stringify(car))
+        alert("Ahora tienes "+this.stock+" "+ this.producto.nombre + " en tu carrito")
+        this.router.navigate(["/carrito"])
+      }else{
+        alert("Por el momento no hay existencias de este producto")
       }
-      car.push({"producto" : this.producto,"stock":this.stock})
-      this.cookies.set("Carrito",JSON.stringify(car))
-      alert("Ahora tienes "+this.stock+" "+ this.producto.nombre + " en tu carrito")
-      this.router.navigate(["/carrito"])
     }else{
       alert("Necesitas estar registrado para añadir productos a tu carrito")
       this.router.navigate(["/login"])
